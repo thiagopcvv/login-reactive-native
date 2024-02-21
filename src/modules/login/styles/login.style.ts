@@ -9,3 +9,7 @@ export const StyleContLogin = styled.View`
         padding: 16px;
         gap: 10px;
 `
+
+export const ImagemLog = styled.Image`
+
+`
