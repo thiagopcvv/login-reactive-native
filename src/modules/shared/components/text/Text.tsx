@@ -6,9 +6,10 @@ import { textTypes } from './textType'
 interface TextProps extends TextPropsNative {
     color?: string
     type?: string
+    margin?: string
 }
 
-const Text = ({ color, type, ...props }: TextProps) => {
+const Text = ({ color, type, margin, ...props }: TextProps) => {
 
     const handleSize = useMemo(() => {
         switch (type) {
@@ -23,7 +24,7 @@ const Text = ({ color, type, ...props }: TextProps) => {
             case textTypes.PARAGRAPH_BOLD:
             case textTypes.PARAGRAPH_REGULAR:
             case textTypes.PARAGRAPH_LIGHT:
-                return '10px'
+                return '12px'
             default:
                 return '16px';
         }
@@ -52,7 +53,7 @@ const Text = ({ color, type, ...props }: TextProps) => {
     }, [type])
 
     return (
-        <TextCont fontFamily={fontFamily} fontSize={handleSize} color={color} {...props}></TextCont>
+        <TextCont customMargin={margin} fontFamily={fontFamily} fontSize={handleSize} color={color} {...props}></TextCont>
     )
 }
 
