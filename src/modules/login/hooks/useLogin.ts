@@ -1,6 +1,6 @@
-import axios from "axios"
 import { useState } from "react"
 import { NativeSyntheticEvent, TextInputChangeEventData } from "react-native"
+import ConnectionAPI, { connectionAPIpost } from "../../shared/functions/connection/connectionAPI"
 
 export const useLogin = () => {
     const [email, setEmail] = useState<string>('')
@@ -10,7 +10,7 @@ export const useLogin = () => {
     
     const handleOnPress = async() => {
         setLoading(true)
-        const resultAxios =  await axios.post('http://172.26.224.1:8080/auth', {
+        connectionAPIpost('http://172.26.224.1:8080/auth', {
             email,
             password
         }).catch(() =>  setErro('Email ou senha inválidos'))
