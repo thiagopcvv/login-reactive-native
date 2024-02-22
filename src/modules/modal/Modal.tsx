@@ -1,36 +1,41 @@
-import React, { useState } from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import React from 'react';
+import { Alert, Modal as ModalReact, StyleSheet, Text, Pressable, View } from 'react-native';
 import { InputCont } from '../shared/components/input/input.style';
 
-const App = () => {
-  const [modalVisible, setModalVisible] = useState(false);
+interface ModalProps {
+  title: string
+  text: string
+  onCloseModal: () => void
+  visible: boolean
+}
+
+const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, visible, ...props }) => {
+  
   return (
     <View style={styles.centeredView}>
-      <Modal
+      <ModalReact
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={visible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
+          onCloseModal()
+        }}
+        {...props}
+        >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <InputCont></InputCont>
+            <Text style={styles.modalText}>{title}</Text>
+            <Text style={styles.modalText}>{text}</Text>
+            <InputCont />
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={onCloseModal}>
               <Text style={styles.textStyle}>Hide Modal</Text>
             </Pressable>
           </View>
         </View>
-      </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Open</Text>
-      </Pressable>
+      </ModalReact>
     </View>
   );
 };
@@ -84,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Modal;

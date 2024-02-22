@@ -1,0 +1,32 @@
+import { useDispatch } from 'react-redux'
+import { useAppSelector } from '../../hoooks/hook';
+import { setModalActions } from '.';
+import { GlobalModalType } from '../../../modules/modal/globalModal/GlobalModal';
+
+export const useGlobalReducer = () => {
+    const dispatch = useDispatch()
+    const { modal } = useAppSelector((state)  => state.modal);
+
+    const closeModal = () => {
+        dispatch(
+            setModalActions({
+                ...modal,
+                visible: false
+            })
+        )
+    }
+
+    const setModal = (title: string, text: string) => {
+        dispatch(setModalActions(
+            vsible: true,
+            title,
+            text
+        ))
+    }
+
+    return {
+        modal,
+        closeModal,
+        setModal
+    }
+}

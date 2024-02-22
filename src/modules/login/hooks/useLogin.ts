@@ -4,9 +4,10 @@ import ConnectionAPI, { connectionAPIpost } from "../../shared/functions/connect
 import { useRequest } from "../../shared/hooks/useRequest"
 import { RootState } from "../../../store";
 import {useSelector} from 'react-redux'
+import { useUserReductor } from "../../../store/reducers/userReducer/useUserReduce";
 
 export const useLogin = () => {
-    const user = useSelector((state: RootState) => state.user)
+    const { user } = useUserReductor()
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const {authRequest, erroMsg, loading, setErro} = useRequest()
@@ -17,7 +18,7 @@ export const useLogin = () => {
         })
     }
 
-    console.log(user)
+    console.log('user:', user)
 
     const handleOnchangeEmail = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
         setErro('')
