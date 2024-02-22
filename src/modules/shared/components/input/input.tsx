@@ -24,7 +24,7 @@ const input = ({ title, errorMsg, secureTextEntry, ...props }: InputProps) => {
                 <Text margin="0px 0px 5px 5px" color={theme.colors.mainTheme.main} type={textTypes.PARAGRAPH_BOLD}>{title}</Text>
             )}
             <View>
-                <InputCont secureTextEntry={currentSecure} isError={!!errorMsg} {...props}><Text color={theme.colors.grayTheme.gray}></Text></InputCont>
+                <InputCont secureTextEntry={currentSecure} isError={!!errorMsg} {...props}></InputCont>
                {secureTextEntry && <IconEye onPress={handleOnPress} name={currentSecure ? "eye" : "eye-blocked"} size={18} />}
             </View>
             {errorMsg && (

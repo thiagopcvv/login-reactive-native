@@ -46,14 +46,14 @@ const Button = ({ title, type, margin, disable, loading, onPress, ...props }: Bu
 
         case theme.buttons.buttonTheme.primary:
             return (
-                <ButtonPrimary margin={margin} {...props}>
+                <ButtonPrimary margin={margin} {...props} onPress={onPress}>
                     {renderText(theme.colors.whiteTheme.white)}
 
                 </ButtonPrimary>
             )
         default:
             return (
-                <ButtonComp margin={margin} {...props}>
+                <ButtonComp margin={margin} {...props} onPress={onPress}>
                     <GradientButton start={{ x: 0, y: 0 }} end={{ x: 1, y: 2 }} colors={[theme.colors.blue80.blue80, '#12D8FA', theme.colors.blue80.blue80]}>
                         {renderText(theme.colors.whiteTheme.white)}
                     </GradientButton>
