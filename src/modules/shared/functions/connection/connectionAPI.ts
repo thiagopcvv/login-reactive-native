@@ -43,23 +43,23 @@ export default class ConnectionAPI {
         })
     }
 }
-export const connectionAPIget = async<T>(url: string): Promise<T> => {
+export const connectionAPIget = async <T>(url: string): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.GET);
 }
 
-export const connectionAPIdelete = async<T>(url: string): Promise<T> => {
+export const connectionAPIdelete = async <T>(url: string): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.DELETE);
 }
 
-export const connectionAPIpost = async<T>(url: string, body: unknown): Promise<T> => {
+export const connectionAPIpost = async <T>(url: string, body: unknown): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.POST, body);
 }
 
-export const connectionAPIput = async<T>(url: string, body: unknown): Promise<T> => {
+export const connectionAPIput = async <T>(url: string, body: unknown): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.PUT, body);
 }
 
-export const connectionAPIpatch = async<T>(url: string, body: unknown): Promise<T> => {
+export const connectionAPIpatch = async <T>(url: string, body: unknown): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.PATCH, body);
 }
 

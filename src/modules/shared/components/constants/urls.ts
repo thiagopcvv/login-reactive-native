@@ -1,1 +1,1 @@
-export const URL_USER = 'http://192.168.100.179:8080/useer'
+export const URL_USER = 'http://192.168.100.179:8080/user'
