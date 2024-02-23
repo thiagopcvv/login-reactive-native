@@ -8,11 +8,15 @@ import { theme } from '../../shared/themes/theme'
 import { Icon } from '../../shared/icon/icon'
 import { DisplayFlexColumn } from '../../shared/components/globalView.style.css/globalView.style'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NativeSyntheticEvent } from 'react-native'
 import { useLogin } from '../hooks/useLogin'
+import { getAuthorizationToken } from '../../shared/functions/connection/auth'
+import { MenuUrl } from '../../shared/components/enums/MenuUrl.enum'
+import { useNavigation } from '@react-navigation/native'
 
 const Login = () => {
+    const navigation = useNavigation()
     const {
         email,
         password,
@@ -23,6 +27,16 @@ const Login = () => {
         handleOnchangePassword
     } = useLogin()
 
+    useEffect(() => {
+        const test = async() => {
+            const token = await getAuthorizationToken()
+            if (token) {
+                navigation.navigate(MenuUrl.HOME)
+            }
+
+        }
+        test()
+    },[])
     return (
         <View>
             <StyleContLogin>

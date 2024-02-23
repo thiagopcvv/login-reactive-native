@@ -1,11 +1,20 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { MetheodEnum } from "../../../../enums/metheods";
+import { getAuthorizationToken } from "./auth";
 
 export type MetheodType = 'get' | 'delete' | 'post' | 'put' | 'patch';
 
 export default class ConnectionAPI {
 
     static async call<T>(url: string, metheod: MetheodType, body?: unknown): Promise<T>{
+       const token = await getAuthorizationToken()
+       
+        const config: AxiosRequestConfig = {
+            headers: {
+                Authorization: token,
+                'Conntent-Type': 'application/json',
+            }
+        }
         switch (metheod) {
             case MetheodEnum.DELETE:
             case MetheodEnum.GET:
