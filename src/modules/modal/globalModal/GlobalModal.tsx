@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Modall from "../Modal"
+import ModalErro from "../ModalError"
 import { useGlobalReducer } from "../../../store/reducers/globalReducer/useGlobalReducer"
 
 export interface GlobalModalType{
@@ -13,7 +14,7 @@ const GlobalModal = () => {
 
 
     return(
-    <Modall title={modal.title} text={modal.text} visible={modal.visible} onCloseModal={closeModal}></Modall>
+    <ModalErro title={modal.title} text={modal.text} visible={modal.visible} onCloseModal={closeModal}></ModalErro>
     )
 }
 

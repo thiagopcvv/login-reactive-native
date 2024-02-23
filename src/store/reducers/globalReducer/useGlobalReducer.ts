@@ -17,11 +17,11 @@ export const useGlobalReducer = () => {
     }
 
     const setModal = (title: string, text: string) => {
-        dispatch(setModalActions(
+        dispatch(setModalActions({
             vsible: true,
             title,
             text
-        ))
+        }))
     }
 
     return {

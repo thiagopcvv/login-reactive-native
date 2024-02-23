@@ -6,17 +6,21 @@ import Modal from './modules/modal/Modal';
 import Button from './modules/shared/components/button/Button';
 import { useState } from 'react';
 import GlobalModal from './modules/modal/globalModal/GlobalModal';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Home from './modules/home';
 
 const App = () => {
-const [modalVisible, setModalVisible] = useState(false);
+    const Stack = createNativeStackNavigator();
     return (
         <Provider store={store}>
-            <SafeAreaView>
-                <GlobalModal></GlobalModal>
-                {/* <Modal onCloseModal={() => setModalVisible(false)} visible={modalVisible} title="entrar" text="Bem-vindo"></Modal> */}
-                {/* <Button title='modal' onPress={() => setModalVisible(true)}></Button> */}
-                <Login />
-            </SafeAreaView>
+            <NavigationContainer>
+            <GlobalModal />
+                <Stack.Navigator>
+                    <Stack.Screen name="Login" component={Login}/>
+                    <Stack.Screen name="Home" component={Home} options={{title: 'Home'}} />
+            </Stack.Navigator>
+            </NavigationContainer>
         </Provider>
     )
 }

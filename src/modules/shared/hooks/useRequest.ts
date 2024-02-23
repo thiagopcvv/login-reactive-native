@@ -6,10 +6,11 @@ import { userType } from "../types/userType"
 import {useDispatch} from 'react-redux'
 import { setUser } from "../../../store/reducers/userReducer"
 import { useUserReductor } from "../../../store/reducers/userReducer/useUserReduce"
-import GlobalModal from "../../modal/globalModal/GlobalModal"
 import { useGlobalReducer } from "../../../store/reducers/globalReducer/useGlobalReducer"
+import { useNavigation } from "@react-navigation/native"
 
 export const useRequest = () => {
+    const {navigate} = useNavigation()
     const { setUserA } = useUserReductor()
     const { setModal } = useGlobalReducer()
     const [loading, setLoading] = useState<boolean>(false)
@@ -17,10 +18,11 @@ export const useRequest = () => {
 
     const authRequest = async (body: RequestLogin) => {
         setLoading(true)
-         await connectionAPIpost<ReturnLogin>('http://192.168.100.179:8080/auth', body).then((result) => {
+         await connectionAPIpost<ReturnLogin>('http://192.168.100.124:8080/auth', body).then((result) => {
             setUserA(result.user);
+            navigate('Home')
         }).catch(() => { 
-            setModal({'Erro', 'Usuario senha inválido'})
+            setModal('ERRO', 'Email ou senha inválidos')
         })
 
         setLoading(false)
