@@ -1,11 +1,21 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { MetheodEnum } from "../../../../enums/metheods";
+import { getAuthorizationToken } from "./auth";
 
 export type MetheodType = 'get' | 'delete' | 'post' | 'put' | 'patch';
 
 export default class ConnectionAPI {
 
     static async call<T>(url: string, metheod: MetheodType, body?: unknown): Promise<T>{
+        const token = await getAuthorizationToken()
+
+        const config: AxiosRequestConfig = {
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            }
+        }
+
         switch (metheod) {
             case MetheodEnum.DELETE:
             case MetheodEnum.GET:
@@ -25,7 +35,7 @@ export default class ConnectionAPI {
                 switch (error.response.status) {
                     case 401:
                         case 403:
-                    throw new Error('Sem permissão')
+                    throw new Error('Sem permissão 403')
                     default:
                         throw new Error('Sem conexão')
                 }

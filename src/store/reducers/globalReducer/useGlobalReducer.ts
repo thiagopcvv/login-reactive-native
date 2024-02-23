@@ -16,17 +16,18 @@ export const useGlobalReducer = () => {
         )
     }
 
-    const setModal = (title: string, text: string) => {
-        dispatch(setModalActions({
-            vsible: true,
-            title,
-            text
-        }))
+    const setModal = (currentModal: GlobalModalType) => {
+        dispatch(setModalActions(currentModal))
+    }
+
+    const setModalTrue = (currentModal: GlobalModalType) => {
+        dispatch(setModalActions(currentModal))
     }
 
     return {
         modal,
         closeModal,
-        setModal
+        setModal,
+        setModalTrue
     }
 }
