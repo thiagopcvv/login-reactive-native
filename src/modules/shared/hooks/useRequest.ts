@@ -49,12 +49,7 @@ export const useRequest = () => {
             return(result)
         })
         .catch((error: Error) => {
-            console.log("Erro na request: ", error);
-            // setModal({
-            //     visible: true,
-            //     title: 'ERRO',
-            //     text: error.message
-            // })
+            console.log("Usuário não encontrado no storage: ", error);
             return undefined
         })
         setLoading(false)

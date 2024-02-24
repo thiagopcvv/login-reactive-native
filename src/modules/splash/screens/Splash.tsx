@@ -8,24 +8,37 @@ import { userReducer } from "../../../store/reducers/userReducer"
 import { useUserReductor } from "../../../store/reducers/userReducer/useUserReduce"
 import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native"
 import { MenuUrl } from "../../shared/enums/MenuUrl.enum"
+import { getAuthorizationToken } from "../../shared/functions/connection/auth"
+import { userType } from "../../shared/types/userType"
 
 const Splash = () => {
-    let returnUser;
     const {reset} = useNavigation<NavigationProp<ParamListBase>>()
     const {request} = useRequest()
     const {setUserA} = useUserReductor()
 
     useEffect(() => {
-        const verifyLogin = async () => {
-            console.log('urlUser: ' , USER_URL)
-            returnUser = await request({
+        const finduser = async (): Promise<undefined | userType> => {
+            let returnUser;
+            const token = await getAuthorizationToken()
+
+            if(token){
+            returnUser = await request<userType>({
                 url: USER_URL,
                 metheod: MetheodEnum.GET,
                 saveGlobal: setUserA,
                 
             })
-            console.log('return: ', returnUser )
-            if(returnUser){
+        }
+        return returnUser
+        }
+
+        const verifyLogin = async () => {
+            const [returnUser] = await Promise.all([
+                finduser(),
+                new Promise((sleep: any) => setTimeout(sleep, 1000)) 
+            ]) 
+            
+             if(returnUser){
                 reset({
                     index: 0,
                     routes: [{name: MenuUrl.HOME}]
