@@ -1,8 +1,9 @@
-import { AUTHORIZATION_KEY } from "../../../../constantes/authorizationConstants";
-import { getItemStorage, removeItemStorage, setItemStorage } from "../sotorageProxy";
+import { AUTORIZATION_KEY } from "../../constants/authConst";
+import { getItemStorage, removeItemStorage, setItemStorage } from "../storageProxy";
 
-export const unsertAuthorizationToken = () => removeItemStorage(AUTHORIZATION_KEY)
+export const unsetAuthorizationKey = () => removeItemStorage(AUTORIZATION_KEY)
 
-export const setAuthorizationToken = (token: string) => setItemStorage(AUTHORIZATION_KEY, token)
+export const setAuthorizationKey = async (token: string) => setItemStorage(AUTORIZATION_KEY, token)
 
-export const getAuthorizationToken = async() => getItemStorage(AUTHORIZATION_KEY);
+export const getAuthorizationToken = async () => getItemStorage(AUTORIZATION_KEY)
+

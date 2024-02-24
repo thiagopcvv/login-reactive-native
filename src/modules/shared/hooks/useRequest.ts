@@ -1,31 +1,85 @@
 import { useState } from "react"
 import { RequestLogin } from "../types/requestLogin"
-import { connectionAPIpost } from "../functions/connection/connectionAPI"
+import ConnectionAPI, { MetheodType, connectionAPIpost, connectionAPIget } from "../functions/connection/connectionAPI"
 import { ReturnLogin } from "../types/returnLogin"
 import { userType } from "../types/userType"
-import {useDispatch} from 'react-redux'
-import { setUser } from "../../../store/reducers/userReducer"
-import { useUserReductor } from "../../../store/reducers/userReducer/useUserReduce"
+import { useDispatch } from 'react-redux'
 import { useGlobalReducer } from "../../../store/reducers/globalReducer/useGlobalReducer"
-import { useNavigation } from "@react-navigation/native"
-import { setAuthorizationToken } from "../functions/connection/auth"
-import { MenuUrl } from "../components/enums/MenuUrl.enum"
+import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native"
+import { MenuUrl } from "../enums/MenuUrl.enum"
+import { setAuthorizationKey } from "../functions/connection/auth"
+import { userReducer } from "../../../store/reducers/userReducer"
+import { useUserReductor } from "../../../store/reducers/userReducer/useUserReduce"
+
+interface requestProps<T, B = unknown>{
+    url: string
+    metheod: MetheodType
+    saveGlobal: (object: T) => void
+    body?: B
+    message?: string
+}
+
 
 export const useRequest = () => {
-    const {navigate} = useNavigation()
-    const { setUserA } = useUserReductor()
+    const { reset } = useNavigation<NavigationProp<ParamListBase>>()
+    const {setUserA} = useUserReductor()
     const { setModal } = useGlobalReducer()
     const [loading, setLoading] = useState<boolean>(false)
     const [erroMsg, setErro] = useState<string>('')
 
+    const request = async <T, B = unknown>({
+        url,
+        metheod,
+        saveGlobal,
+        body,
+        message,}: requestProps<T, B>): Promise<T | undefined>  => {
+         const returnObject: T | undefined = await ConnectionAPI.connect<T, B>(url, metheod, body).then((result) => {
+            if(saveGlobal){
+                console.log('Save Global')
+                saveGlobal(result)
+            }
+            if(message){
+                setModal({
+                    visible: true,
+                    title: 'SUCESSO',
+                    text: message
+                })
+            }
+            
+            return(result)
+        })
+        .catch((error: Error) => {
+            console.log("Erro na request: ", error);
+            // setModal({
+            //     visible: true,
+            //     title: 'ERRO',
+            //     text: error.message
+            // })
+            return undefined
+        })
+        setLoading(false)
+        return returnObject;
+    }
+
+
+
     const authRequest = async (body: RequestLogin) => {
         setLoading(true)
-         await connectionAPIpost<ReturnLogin>('http://192.168.100.124:8080/auth', body).then((result) => {
-            setAuthorizationToken(result.accessToken)
+        await connectionAPIpost<ReturnLogin>('http://192.168.100.124:8080/auth', body)
+        .then((result) => {
+            setAuthorizationKey(result.accessToken)
             setUserA(result.user);
-            navigate(MenuUrl.HOME)
-        }).catch(() => { 
-            setModal('ERRO', 'Email ou senha inválidos')
+            reset({
+                index: 0,
+                routes: [{ name: MenuUrl.HOME }],
+            })
+        }).catch(() => {
+            setModal({
+                visible: true,
+                title: 'ERRO',
+                text: 'Email ou senha incorretos'
+            })
+
         })
 
         setLoading(false)
@@ -35,8 +89,9 @@ export const useRequest = () => {
     return {
         loading,
         erroMsg,
+        request,
         authRequest,
-        setErro
+        setErro,
     }
 
 }
