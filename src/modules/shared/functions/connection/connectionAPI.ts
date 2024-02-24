@@ -6,7 +6,7 @@ export type MetheodType = 'get' | 'delete' | 'post' | 'put' | 'patch';
 
 export default class ConnectionAPI {
 
-    static async call<T>(url: string, metheod: MetheodType, body?: unknown): Promise<T>{
+    static async call<T, B = unknown>(url: string, metheod: MetheodType, body?: B): Promise<T>{
         const token = await getAuthorizationToken()
 
         const config: AxiosRequestConfig = {
@@ -19,17 +19,17 @@ export default class ConnectionAPI {
         switch (metheod) {
             case MetheodEnum.DELETE:
             case MetheodEnum.GET:
-                return (await axios[metheod]<T>(url)).data;
+                return (await axios[metheod]<T>(url, config)).data;
             case MetheodEnum.POST:
             case MetheodEnum.PUT:
             case MetheodEnum.PATCH:
             default:
-                return (await axios[metheod]<T>(url, body)).data;
+                return (await axios[metheod]<T>(url, body, config)).data;
         }
 
     }
 
-    static async connect<T>(url: string, metheod: MetheodType, body?: unknown): Promise<T>{
+    static async connect<T, B = unknown>(url: string, metheod: MetheodType, body?: B): Promise<T>{
         return this.call<T>(url, metheod, body).catch((error) => {
             if(error.response){
                 switch (error.response.status) {
@@ -52,15 +52,15 @@ export const connectionAPIdelete = async<T>(url: string): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.DELETE);
 }
 
-export const connectionAPIpost = async<T>(url: string, body: unknown): Promise<T> => {
+export const connectionAPIpost = async<T, B = unknown>(url: string, body: unknown): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.POST, body);
 }
 
-export const connectionAPIput = async<T>(url: string, body: unknown): Promise<T> => {
+export const connectionAPIput = async<T, B = unknown>(url: string, body: unknown): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.PUT, body);
 }
 
-export const connectionAPIpatch = async<T>(url: string, body: unknown): Promise<T> => {
+export const connectionAPIpatch = async<T, B = unknown>(url: string, body: unknown): Promise<T> => {
     return ConnectionAPI.connect(url, MetheodEnum.PATCH, body);
 }
 

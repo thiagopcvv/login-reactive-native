@@ -11,11 +11,11 @@ import { setAuthorizationKey } from "../functions/connection/auth"
 import { userReducer } from "../../../store/reducers/userReducer"
 import { useUserReductor } from "../../../store/reducers/userReducer/useUserReduce"
 
-interface requestProps<T>{
+interface requestProps<T, B = unknown>{
     url: string
     metheod: MetheodType
     saveGlobal: (object: T) => void
-    body?: unknown
+    body?: B
     message?: string
 }
 
@@ -27,13 +27,13 @@ export const useRequest = () => {
     const [loading, setLoading] = useState<boolean>(false)
     const [erroMsg, setErro] = useState<string>('')
 
-    const request = async <T>({
+    const request = async <T, B = unknown>({
         url,
         metheod,
         saveGlobal,
         body,
-        message,}: requestProps<T>): Promise<T | undefined>  => {
-         const returnObject: T | undefined = await ConnectionAPI.connect<T>(url, metheod, body).then((result) => {
+        message,}: requestProps<T, B>): Promise<T | undefined>  => {
+         const returnObject: T | undefined = await ConnectionAPI.connect<T, B>(url, metheod, body).then((result) => {
             if(saveGlobal){
                 console.log('Save Global')
                 saveGlobal(result)
@@ -48,7 +48,7 @@ export const useRequest = () => {
             
             return(result)
         })
-        .catch((error: any) => {
+        .catch((error: Error) => {
             console.log("Erro na request: ", error);
             // setModal({
             //     visible: true,
@@ -65,7 +65,7 @@ export const useRequest = () => {
 
     const authRequest = async (body: RequestLogin) => {
         setLoading(true)
-        await connectionAPIpost<ReturnLogin>('http://192.168.100.179:8080/auth', body)
+        await connectionAPIpost<ReturnLogin>('http://192.168.100.124:8080/auth', body)
         .then((result) => {
             setAuthorizationKey(result.accessToken)
             setUserA(result.user);
