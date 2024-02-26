@@ -9,44 +9,75 @@ interface ModalProps {
   text: string
   onCloseModal: () => void
   visible: boolean
+  trueOrMot: boolean
 }
 
-const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, visible, ...props }) => {
-  
-  return (
-    <View style={styles.centeredView}>
-      <ModalReact
-        animationType="slide"
-        transparent={true}
-        visible={visible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          onCloseModal()
-        }}
-        {...props}
-        >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Icon name="cancel-circle" style={styles.icon} size={70}></Icon>
-            <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>{title}</Text>
-            <Text style={styles.modalText}>{text}</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={onCloseModal}>
-              <Text style={styles.textStyle}>OK !</Text>
-            </Pressable>
+const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, trueOrMot, visible, ...props }) => {
+
+  if (trueOrMot) {
+    return (
+      <View style={styles.centeredView}>
+        <ModalReact
+          animationType="slide"
+          transparent={true}
+          visible={visible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            onCloseModal()
+          }}
+          {...props}
+          >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Icon name="user-check" style={styles.iconTrue} size={70}></Icon>
+              <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>{title}</Text>
+              <Text style={styles.modalText}>{text}</Text>
+              <Pressable
+                style={[styles.button, styles.buttonTrue]}
+                onPress={onCloseModal}>
+                <Text style={styles.textStyle}>OK !</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </ModalReact>
-    </View>
-  );
-};
+        </ModalReact>
+      </View>
+    );
+  } else {
+
+    return (
+      <View style={styles.centeredView}>
+        <ModalReact
+          animationType="slide"
+          transparent={true}
+          visible={visible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            onCloseModal()
+          }}
+          {...props}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Icon name="cancel-circle" style={styles.icon} size={70}></Icon>
+              <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>{title}</Text>
+              <Text style={styles.modalText}>{text}</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={onCloseModal}>
+                <Text style={styles.textStyle}>OK !</Text>
+              </Pressable>
+            </View>
+          </View>
+        </ModalReact>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   centeredView: {
     justifyContent: 'center',
     alignItems: 'center',
-    
   },
   modalView: {
     marginTop: '40%',
@@ -68,8 +99,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 100,
   },
-  icon : {
+  icon: {
     color: '#F44B4B',
+    marginBottom: 20
+  },
+  iconTrue: {
+    color: '#4bf470',
     marginBottom: 20
   },
   button: {
@@ -85,6 +120,11 @@ const styles = StyleSheet.create({
   buttonClose: {
     width: '50%',
     backgroundColor: '#F44B4B',
+    margin: 20
+  },
+  buttonTrue: {
+    width: '50%',
+    backgroundColor: '#4bf470',
     margin: 20
   },
   textStyle: {

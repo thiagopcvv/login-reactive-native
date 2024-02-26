@@ -1,60 +1,94 @@
 import React from 'react';
-import { Alert, Modal as ModalReact, StyleSheet, Text, Pressable, View } from 'react-native';
-import { InputCont } from '../shared/components/input/input.style';
+import { Alert, Modal as ModalReact, StyleSheet, Pressable, View } from 'react-native';
+import Text from '../shared/components/text/Text';
+import { Icon } from '../shared/icon/icon';
+import { textTypes } from '../shared/components/text/textType';
 
 interface ModalProps {
   title: string
   text: string
   onCloseModal: () => void
   visible: boolean
+  trueOrMot: boolean
 }
 
-const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, visible, ...props }) => {
-  
-  return (
-    <View style={styles.centeredView}>
-      <ModalReact
-        animationType="slide"
-        transparent={true}
-        visible={visible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          onCloseModal()
-        }}
-        {...props}
-        >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>{title}</Text>
-            <Text style={styles.modalText}>{text}</Text>
-            <InputCont />
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={onCloseModal}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
-            </Pressable>
+const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, trueOrMot, visible, ...props }) => {
+
+  if (trueOrMot) {
+    return (
+      <View style={styles.centeredView}>
+        <ModalReact
+          animationType="slide"
+          transparent={true}
+          visible={visible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            onCloseModal()
+          }}
+          {...props}
+          >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Icon name="user-check" style={styles.iconTrue} size={70}></Icon>
+              <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>{title}</Text>
+              <Text style={styles.modalText}>{text}</Text>
+              <Pressable
+                style={[styles.button, styles.buttonTrue]}
+                onPress={onCloseModal}>
+                <Text style={styles.textStyle}>OK !</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </ModalReact>
-    </View>
-  );
-};
+        </ModalReact>
+      </View>
+    );
+  } else {
+
+    return (
+      <View style={styles.centeredView}>
+        <ModalReact
+          animationType="slide"
+          transparent={true}
+          visible={visible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            onCloseModal()
+          }}
+          {...props}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Icon name="cancel-circle" style={styles.icon} size={70}></Icon>
+              <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>{title}</Text>
+              <Text style={styles.modalText}>{text}</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={onCloseModal}>
+                <Text style={styles.textStyle}>OK !</Text>
+              </Pressable>
+            </View>
+          </View>
+        </ModalReact>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
   },
   modalView: {
+    marginTop: '40%',
     width: '90%',
     height: '50%',
     justifyContent: 'center',
+    alignContent: 'center',
     margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
+    padding: 40,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -63,7 +97,15 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 100,
+  },
+  icon: {
+    color: '#F44B4B',
+    marginBottom: 20
+  },
+  iconTrue: {
+    color: '#4bf470',
+    marginBottom: 20
   },
   button: {
     borderRadius: 20,
@@ -71,11 +113,18 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
+    margin: 0,
     width: '50%',
     backgroundColor: '#2196F3',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    width: '50%',
+    backgroundColor: '#F44B4B',
+    margin: 20
+  },
+  buttonTrue: {
+    width: '50%',
+    backgroundColor: '#4bf470',
     margin: 20
   },
   textStyle: {
@@ -83,9 +132,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  modalTitle: {
+    fontSize: 22,
+    marginBottom: 10
+  },
   modalText: {
-    marginBottom: 15,
+    margin: 0,
     textAlign: 'center',
+    borderRadius: 2,
+    fontFamily: 'Poppins-Bold'
   },
 });
 

@@ -1,14 +1,12 @@
-import { View, Button, StyleSheet, TextInputChangeEventData } from 'react-native'
+import { View, Button, StyleSheet, TextInputChangeEventData, TouchableOpacity } from 'react-native'
 import { ImagemLog, StyleContLogin } from '../styles/login.style'
 import Input from '../../shared/components/input/input'
 import Buttonn from '../../shared/components/button/Button'
 import { useLogin } from '../hooks/useLogin'
-import { getAuthorizationToken } from '../../shared/functions/connection/auth'
-import { MenuUrl } from '../../shared/components/enums/MenuUrl.enum'
-import { useNavigation } from '@react-navigation/native'
+import Text from '../../shared/components/text/Text'
+import { textTypes } from '../../shared/components/text/textType'
 
 const Login = () => {
-    const navigation = useNavigation()
     const {
         email,
         password,
@@ -16,7 +14,8 @@ const Login = () => {
         erroMsg,
         handleOnPress,
         handleOnchangeEmail,
-        handleOnchangePassword
+        handleOnchangePassword,
+        handleToCreateUser
     } = useLogin()
 
     return (
@@ -25,6 +24,7 @@ const Login = () => {
                 <ImagemLog style={styles.imgEducar} resizeMode='center' source={require('../../../assets/image/logoEducarNovo.png')}></ImagemLog>
                 <Input value={email} errorMsg={erroMsg} placeholder="Digite seu email" title='Email' onChange={handleOnchangeEmail} />
                 <Input secureTextEntry errorMsg={erroMsg} value={password} placeholder="Digite sua Senha" title='Senha' onChange={handleOnchangePassword}></Input>
+                <TouchableOpacity onPress={handleToCreateUser}><Text margin='16px' color='#1FA2FF' type={textTypes.PARAGRAPH_BOLD}>Cadastrar Usuário</Text></TouchableOpacity>
                 <Buttonn loading={loading} margin='8px' title='ENTRAR' onPress={handleOnPress}></Buttonn>
             </StyleContLogin>
         </View>

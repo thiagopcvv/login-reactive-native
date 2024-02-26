@@ -9,14 +9,14 @@ interface ButtonProps extends TouchableOpacityProps {
     title: string
     margin?: string
     type?: string
-    disable?: boolean
+    disabled?: boolean
     loading?: boolean
     onePrass?: () => void
 }
 
-const Button = ({ title, type, margin, disable, loading, onPress, ...props }: ButtonProps) => {
+const Button = ({ title, type, margin, disabled, loading, onPress, ...props }: ButtonProps) => {
     const handleOnPress = () => {
-        if (!disable && !loading && onPress) {
+        if (!loading && !disabled && onPress) {
             onPress()
         }
     }
@@ -28,16 +28,15 @@ const Button = ({ title, type, margin, disable, loading, onPress, ...props }: Bu
         </>
     )
 
-    if (disable) {
-        {console.log('entrei')}
-        <ButtonDisabled {...props} margin={margin}>
-            {renderText(theme.colors.mainTheme.main)}
+    if (disabled) {
+        {console.log('entreiButton')}
+        <ButtonDisabled {...props} margin={margin} disabled>
+            {renderText(theme.colors.orangeTheme.orange)}
         </ButtonDisabled>
     }
 
     switch (type) {
         case theme.buttons.buttonTheme.secondary:
-
             return (
                 <ButtonSecondary  {...props} margin={margin} onPress={handleOnPress}>
                     {renderText(theme.colors.mainTheme.main)}

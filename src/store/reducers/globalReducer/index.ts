@@ -11,7 +11,7 @@ const initialState: GlobalStore = {
    modal: {
     visible: false,
     title: '',
-    text: ''
+    text: '',
    }
 }
 
