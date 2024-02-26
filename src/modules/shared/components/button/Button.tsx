@@ -29,7 +29,6 @@ const Button = ({ title, type, margin, disabled, loading, onPress, ...props }: B
     )
 
     if (disabled) {
-        {console.log('entreiButton')}
         <ButtonDisabled {...props} margin={margin} disabled>
             {renderText(theme.colors.orangeTheme.orange)}
         </ButtonDisabled>

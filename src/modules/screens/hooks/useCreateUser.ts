@@ -7,8 +7,9 @@ import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/
 import { USER_URL } from "../../shared/constants/urls"
 import { MenuUrl } from "../../shared/enums/MenuUrl.enum"
 import { MetheodEnum } from "../../../enums/metheods"
-import { insertMaskInCpf } from "../../shared/functions/cpf"
-import { maskPhone } from "../../shared/functions/phone"
+import { validateCpf } from "../../shared/functions/cpf"
+import { validatePhone } from "../../shared/functions/phone"
+import { validateEmail } from "../../shared/functions/email"
 
 export const useCreateUser = () => {
     const { reset } = useNavigation<NavigationProp<ParamListBase>>()
@@ -26,7 +27,8 @@ export const useCreateUser = () => {
     useEffect(() => {
         
         if(createUser.name !== '' && createUser.cpf !== '' && createUser.email !== '' &&
-            createUser.phone !== '' && createUser.password !== '' &&
+            createUser.phone !== '' && createUser.password !== '' && validateCpf(createUser.cpf) &&
+            validatePhone(createUser.phone) && validateEmail(createUser.email) &&
             createUser.confirmPassword === createUser.password)
           {
             setDisabled(false)

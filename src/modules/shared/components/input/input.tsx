@@ -1,12 +1,12 @@
-import { NativeSyntheticEvent, TextInputProps, TextInputTextInputEventData, View } from "react-native"
-import { useState } from "react";
+import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, TextInputProps, View } from "react-native"
+import { forwardRef, useState } from "react";
 import { InputCont, IconEye } from "./input.style";
 import { DisplayFlexColumn } from "../globalView.style.css/globalView.style";
 import Text from "../text/Text";
 import { theme } from "../../themes/theme";
 import { textTypes } from "../text/textType";
 import { insertMaskInCpf } from "../../functions/cpf";
-import { maskPhone } from "../../functions/phone";
+import { insertMaskInPhone } from "../../functions/phone";
 
 interface InputProps extends TextInputProps {
     title?: string
@@ -15,16 +15,19 @@ interface InputProps extends TextInputProps {
     type?: 'cel-phone' | 'cpf'
 }
 
-const input = ({ title, errorMsg, secureTextEntry, onChange, type, ...props }: InputProps) => {
+const input = forwardRef<TextInput, InputProps>(({ title, errorMsg, secureTextEntry, onChange, type, ...props }: InputProps, ref) => {
     const [currentSecure, setCurrentSecure] = useState<boolean>(!!secureTextEntry)
-    const handleOnChange = (event: NativeSyntheticEvent<TextInputTextInputEventData>) => {
+    const handleOnChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
         if (onChange) {
             let text = event.nativeEvent.text;
             switch (type) {
                 case 'cpf':
+                    console.log(event.nativeEvent.text)
                     text = insertMaskInCpf(text)
+                    break
                 case 'cel-phone':
-                    text = maskPhone(text)
+                    text = insertMaskInPhone(text)
+                    break
                 default:
                     text = event.nativeEvent.text;
                     break;
@@ -34,8 +37,6 @@ const input = ({ title, errorMsg, secureTextEntry, onChange, type, ...props }: I
                 nativeEvent:{
                     ...event.nativeEvent,
                     text,
-                    eventCount: 0,
-                    target: 0
                 },
             })
         }
@@ -50,7 +51,7 @@ const input = ({ title, errorMsg, secureTextEntry, onChange, type, ...props }: I
                 <Text margin="0px 0px 5px 5px" color={theme.colors.mainTheme.main} type={textTypes.PARAGRAPH_BOLD}>{title}</Text>
             )}
             <View>
-                <InputCont secureTextEntry={currentSecure} isError={!!errorMsg} {...props} onChange={handleOnChange}></InputCont>
+                <InputCont secureTextEntry={currentSecure} isError={!!errorMsg} {...props} onChange={handleOnChange} ref={ref}></InputCont>
                 {secureTextEntry && <IconEye onPress={handleOnPress} name={currentSecure ? "eye" : "eye-blocked"} size={18} />}
             </View>
             {errorMsg && (
@@ -60,7 +61,7 @@ const input = ({ title, errorMsg, secureTextEntry, onChange, type, ...props }: I
             )}
         </DisplayFlexColumn>
     )
-}
+})
 
 export default input;
 
