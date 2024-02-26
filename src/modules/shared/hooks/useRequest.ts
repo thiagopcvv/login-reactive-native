@@ -1,16 +1,12 @@
 import { useState } from "react"
 import { RequestLogin } from "../types/requestLogin"
-import ConnectionAPI, { MetheodType, connectionAPIpost, connectionAPIget } from "../functions/connection/connectionAPI"
+import ConnectionAPI, { MetheodType, connectionAPIpost } from "../functions/connection/connectionAPI"
 import { ReturnLogin } from "../types/returnLogin"
-import { userType } from "../types/userType"
-import { useDispatch } from 'react-redux'
 import { useGlobalReducer } from "../../../store/reducers/globalReducer/useGlobalReducer"
 import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native"
 import { MenuUrl } from "../enums/MenuUrl.enum"
 import { setAuthorizationKey } from "../functions/connection/auth"
-import { userReducer } from "../../../store/reducers/userReducer"
 import { useUserReductor } from "../../../store/reducers/userReducer/useUserReduce"
-import { useGlobalReducerTrue } from "../../../store/reducers/modalTrueReducer/useGlobalReducerTRUE"
 
 interface requestProps<T, B = unknown>{
     url: string
@@ -36,7 +32,6 @@ export const useRequest = () => {
         message,}: requestProps<T, B>): Promise<T | undefined>  => {
          const returnObject: T | undefined = await ConnectionAPI.connect<T, B>(url, metheod, body).then((result) => {
             if(saveGlobal){
-                console.log('Save Global')
                 saveGlobal(result)
             }
             if(message){
@@ -62,7 +57,7 @@ export const useRequest = () => {
 
     const authRequest = async (body: RequestLogin) => {
         setLoading(true)
-        await connectionAPIpost<ReturnLogin>('http://192.168.100.179:8080/auth', body)
+        await connectionAPIpost<ReturnLogin>('http://192.168.100.124:8080/auth', body)
         .then((result) => {
             setAuthorizationKey(result.accessToken)
             setUserA(result.user);

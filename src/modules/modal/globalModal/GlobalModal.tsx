@@ -12,7 +12,6 @@ export interface GlobalModalType{
 const GlobalModal = () => {
     const { modal, closeModal } = useGlobalReducer()
 
-    console.log(modal.trueOrMot)
     return(
     <Modal title={modal.title} text={modal.text} visible={modal.visible} onCloseModal={closeModal} trueOrMot={modal.trueOrMot}></Modal>
     )

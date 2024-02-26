@@ -22,7 +22,6 @@ const input = forwardRef<TextInput, InputProps>(({ title, errorMsg, secureTextEn
             let text = event.nativeEvent.text;
             switch (type) {
                 case 'cpf':
-                    console.log(event.nativeEvent.text)
                     text = insertMaskInCpf(text)
                     break
                 case 'cel-phone':

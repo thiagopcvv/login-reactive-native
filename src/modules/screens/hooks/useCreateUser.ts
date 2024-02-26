@@ -38,7 +38,6 @@ export const useCreateUser = () => {
     }, [createUser])
 
     const handleCreateUser = async() => {
-        console.log(createUser)
         const resultCreateUser = await request ({
             url: USER_URL,
             metheod: MetheodEnum.POST,

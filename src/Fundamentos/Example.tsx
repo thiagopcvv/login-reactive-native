@@ -10,7 +10,6 @@ const Example = ({children, text}: Props) =>{
     const [newText, setNewText] = useState()
     
     useEffect(() => {
-        console.log('passou');
     }, [newText])
 
     const handleOnpress = () => {
