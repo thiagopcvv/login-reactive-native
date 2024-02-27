@@ -22,3 +22,9 @@ export const IconEye = styled(Icon)`
         right: 15px;
         top: 12px;
 `
+
+export const IconSeach = styled(Icon)`
+        position: absolute;
+        right: 15px;
+        top: 16px;
+`

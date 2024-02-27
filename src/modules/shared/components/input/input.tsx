@@ -1,6 +1,6 @@
 import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, TextInputProps, View } from "react-native"
 import { forwardRef, useState } from "react";
-import { InputCont, IconEye } from "./input.style";
+import { InputCont, IconEye, IconSeach } from "./input.style";
 import { DisplayFlexColumn } from "../globalView.style.css/globalView.style";
 import Text from "../text/Text";
 import { theme } from "../../themes/theme";
@@ -13,9 +13,11 @@ interface InputProps extends TextInputProps {
     errorMsg?: string
     secureTextEntry?: boolean
     type?: 'cel-phone' | 'cpf'
+    iconRight?: string
+    onPressIconRight?: () => void
 }
 
-const input = forwardRef<TextInput, InputProps>(({ title, errorMsg, secureTextEntry, onChange, type, ...props }: InputProps, ref) => {
+const Input = forwardRef<TextInput, InputProps>(({ title, errorMsg, secureTextEntry, onChange, type, iconRight, onPressIconRight, ...props }: InputProps, ref) => {
     const [currentSecure, setCurrentSecure] = useState<boolean>(!!secureTextEntry)
     const handleOnChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
         if (onChange) {
@@ -52,6 +54,7 @@ const input = forwardRef<TextInput, InputProps>(({ title, errorMsg, secureTextEn
             <View>
                 <InputCont secureTextEntry={currentSecure} isError={!!errorMsg} {...props} onChange={handleOnChange} ref={ref}></InputCont>
                 {secureTextEntry && <IconEye onPress={handleOnPress} name={currentSecure ? "eye" : "eye-blocked"} size={18} />}
+                {iconRight && <IconSeach name='search' size={15} onPress={onPressIconRight}/>}
             </View>
             {errorMsg && (
                 <Text type={textTypes.PARAGRAPH_LIGHT} margin="0px 0px 0px 8px" color={theme.colors.orangeTheme.orange}>
@@ -62,5 +65,5 @@ const input = forwardRef<TextInput, InputProps>(({ title, errorMsg, secureTextEn
     )
 })
 
-export default input;
+export default Input;
 

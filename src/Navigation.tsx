@@ -14,6 +14,7 @@ import Profile from './modules/profile/indext';
 import Orders from './modules/order';
 import Cart from './modules/cart';
 import Product from './modules/product';
+import SearchProducts from './modules/searchProducts';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -72,6 +73,7 @@ const Navigation = () => {
                 <Stack.Screen name={MenuUrl.HOME} component={TabNavigation} options={{headerShown: false}} />
                 <Stack.Screen name={MenuUrl.CREATE_USER} component={CreateUser} options={{ title: 'Criar Usuário' }} />
                 <Stack.Screen name={MenuUrl.PRODUCT} component={Product} options={{ title: 'Descrição' }} />
+                <Stack.Screen name={MenuUrl.SEARCH} component={SearchProducts} options={{ title: 'Buscar' }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

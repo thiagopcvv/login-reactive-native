@@ -1,18 +1,25 @@
 import { useDispatch } from "react-redux"
 import { useAppSelector } from "../../hoooks/hook"
 import { ProductType } from "../../../modules/shared/types/productType"
-import { setProductsAction } from "."
+import { setProductsAction, setSearchProductsAction } from "."
+import { PaginationType } from "../../../modules/shared/types/SearchType"
 
 export const useProductReducer = () => {
     const dispatch = useDispatch()
-    const {products} = useAppSelector((state) => state.productReducer)
+    const {products, searchProducts} = useAppSelector((state) => state.productReducer)
 
     const setProducts = (currentProduct: ProductType[]) => {
         dispatch(setProductsAction(currentProduct))
     }
 
+    const setSearchProducts = (currentProduct: PaginationType<ProductType[]>) => {
+        dispatch(setSearchProductsAction(currentProduct))
+    }
+
     return {
         products,
-        setProducts
+        setProducts,
+        setSearchProducts,
+        searchProducts
     }
 }

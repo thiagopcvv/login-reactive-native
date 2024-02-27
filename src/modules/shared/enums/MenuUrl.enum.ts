@@ -7,4 +7,5 @@ export const enum MenuUrl {
     PROFILE = 'Profile',
     PRODUCT = 'Product',
     CART = 'Cart',
+    SEARCH = 'Search'
 }
