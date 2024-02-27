@@ -8,13 +8,13 @@ import { MenuUrl } from "../enums/MenuUrl.enum"
 import { setAuthorizationKey } from "../functions/connection/auth"
 import { useUserReductor } from "../../../store/reducers/userReducer/useUserReduce"
 
-interface requestProps<T, B = unknown>{
-    url: string
-    metheod: MetheodType
-    saveGlobal?: (object: T) => void
-    body?: B
-    message?: string
-}
+interface requestProps<T, B = unknown> {
+    url: string;
+    metheod: MetheodType;
+    saveGlobal?: (object: T) => void;
+    body?: B;
+    message?: string;
+  }
 
 
 export const useRequest = () => {
