@@ -16,7 +16,6 @@ import { ProductNavigationProp } from "../../product/screens/Product"
 import ProductThumbnail from "../../shared/components/product Thumbnail/ProductThumbnail"
 
 const Home = () => {
-    const { navigate } = useNavigation<ProductNavigationProp>()
     const { products, setProducts } = useProductReducer()
     const { request } = useRequest()
 
@@ -28,14 +27,7 @@ const Home = () => {
         });
     }, []);
 
-    const handleGoToProduct = (product: ProductType) => {
-        navigate(MenuUrl.PRODUCT, {product})
-    }
 
-
-    console.log('a :', products.map((product, index) => {
-        product.nome
-    }))
     return (
         <SafeAreaView>
             <Text>teste</Text>

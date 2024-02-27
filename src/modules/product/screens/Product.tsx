@@ -15,7 +15,7 @@ const Product = () => {
     const {product} = params
     return(
         <View>
-            <Text>{product.nome}</Text>
+            <Text>{product.descricao}</Text>
         </View>
     )
 

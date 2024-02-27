@@ -22,3 +22,14 @@ export const ImagemLog = styled.Image`
 
     border-radius: 4px;
 `
+
+export const InsertCart = styled.TouchableOpacity`
+    height: 32px;
+    width: 110px;
+    justify-content: center;
+    align-items: center;
+    background-color: ${theme.colors.blue80.blue80};
+
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+`
