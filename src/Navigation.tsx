@@ -12,6 +12,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { theme } from './modules/shared/themes/theme';
 import Profile from './modules/profile/indext';
 import Orders from './modules/order';
+import Cart from './modules/cart';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,6 +30,9 @@ const TabNavigation = () => {
                             case 'Orders':
                             iconName = 'coin-dollar'
                             break;
+                            case 'Cart':
+                                iconName = 'cart'
+                                break;
                     
                         default:
                             iconName = 'profile'
@@ -48,9 +52,10 @@ const TabNavigation = () => {
                 tabBarInactiveTintColor: theme.colors.mainTheme.main,
                 })}
             >
-                <Tab.Screen name="Home" component={Home} />
-                <Tab.Screen name="Orders" component={Orders} />
-                <Tab.Screen name="Profile" component={Profile} />
+                <Tab.Screen name={MenuUrl.HOME} component={Home} />
+                <Tab.Screen name={MenuUrl.CART} component={Cart} options={{title: 'Carrino'}} />
+                <Tab.Screen name={MenuUrl.ORDERS} component={Orders} />
+                <Tab.Screen name={MenuUrl.PROFILE} component={Profile} options={{title: 'Perfil'}} />
             </Tab.Navigator>
     )
 }

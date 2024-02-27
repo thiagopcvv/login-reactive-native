@@ -10,10 +10,15 @@ import { useRequest } from "../../shared/hooks/useRequest"
 import { PRODUCT_URL, USER_URL } from "../../shared/constants/urls"
 import { MetheodEnum } from "../../../enums/metheods"
 import { ProductType } from "../../shared/types/productType"
+import { MenuUrl } from "../../shared/enums/MenuUrl.enum"
+import { FlatList, TouchableOpacity } from "react-native"
+import { ProductNavigationProp } from "../../product/screens/Product"
+import ProductThumbnail from "../../shared/components/product Thumbnail/ProductThumbnail"
 
 const Home = () => {
-    const {products, setProducts} = useProductReducer()
-    const {request} = useRequest()
+    const { navigate } = useNavigation<ProductNavigationProp>()
+    const { products, setProducts } = useProductReducer()
+    const { request } = useRequest()
 
     useEffect(() => {
         request<ProductType[]>({
@@ -22,15 +27,19 @@ const Home = () => {
             saveGlobal: setProducts,
         });
     }, []);
-    
+
+    const handleGoToProduct = (product: ProductType) => {
+        navigate(MenuUrl.PRODUCT, {product})
+    }
 
 
-    console.log(PRODUCT_URL)
-    return(
+    console.log('a :', products.map((product, index) => {
+        product.nome
+    }))
+    return (
         <SafeAreaView>
-        {products.map((product) => (
-            <Text>{product.name}</Text> 
-            ))}
+            <Text>teste</Text>
+            <FlatList horizontal data={products} renderItem={({item}) => <ProductThumbnail margin="0px 4px" product={item}/>}/>
         </SafeAreaView>
     )
 }

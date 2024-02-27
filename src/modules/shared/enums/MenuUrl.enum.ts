@@ -2,5 +2,9 @@ export const enum MenuUrl {
     SPLASH = 'Splash',
     LOGIN = 'Login',
     HOME = 'Home',
-    CREATE_USER= 'CreateUser'
+    CREATE_USER = 'CreateUser',
+    ORDERS = 'Orders',
+    PROFILE = 'Profile',
+    PRODUCT = 'Product',
+    CART = 'Cart',
 }

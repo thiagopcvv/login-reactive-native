@@ -16,6 +16,10 @@ export default class ConnectionAPI {
             }
         }
 
+        console.log('method', metheod)
+        console.log('config', config)
+        console.log('url', url)
+
         switch (metheod) {
             case MetheodEnum.DELETE:
             case MetheodEnum.GET:
