@@ -5,7 +5,6 @@ import Text from "../text/Text"
 import { textTypes } from "../text/textType"
 import { convertNumber } from "../../functions/money"
 import { theme } from "../../themes/theme"
-import Button from "../button/Button"
 import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native"
 import { ProductNavigationProp } from "../../../product/screens/Product"
 import { MenuUrl } from "../../../shared/enums/MenuUrl.enum"
@@ -17,6 +16,7 @@ import { useRequest } from "../../hooks/useRequest"
 interface ProductThumbnailProps {
     product: ProductType;
     margin?: string;
+    style?: string
 }
 
 const ProductThumbnail = ({ product, margin }: ProductThumbnailProps) => {
