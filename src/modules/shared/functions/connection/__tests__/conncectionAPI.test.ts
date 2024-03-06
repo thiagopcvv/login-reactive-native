@@ -23,7 +23,7 @@ jest.mock('../auth', () => ({
 
 describe('ConnectionAPI', () => {
   describe('connectionAPIGet', () => {
-    it('should success get', async () => {
+    it('deve ter sucesso com get', async () => {
       const spyAxios = jest.spyOn(axios, 'get');
       mockAxios.onGet(USER_URL).reply(200, mockReturnValue);
 
@@ -35,7 +35,7 @@ describe('ConnectionAPI', () => {
   });
 
   describe('connectionAPIDelete', () => {
-    it('should success delete', async () => {
+    it('deve ter sucesso com delete', async () => {
       const spyAxios = jest.spyOn(axios, 'delete');
       mockAxios.onDelete(USER_URL).reply(200, mockReturnValue);
 
@@ -47,7 +47,7 @@ describe('ConnectionAPI', () => {
   });
 
   describe('connectionAPIPost', () => {
-    it('should success post', async () => {
+    it('deve ter sucesso com post', async () => {
       const spyAxios = jest.spyOn(axios, 'post');
       mockAxios.onPost(USER_URL).reply(200, mockReturnValue);
 
@@ -60,7 +60,7 @@ describe('ConnectionAPI', () => {
   });
 
   describe('connectionAPIPut', () => {
-    it('should success put', async () => {
+    it('deve ter sucesso com put', async () => {
       const spyAxios = jest.spyOn(axios, 'put');
       mockAxios.onPut(USER_URL).reply(200, mockReturnValue);
 
@@ -73,7 +73,7 @@ describe('ConnectionAPI', () => {
   });
 
   describe('connectionAPIPatch', () => {
-    it('should success patch', async () => {
+    it('deve ter sucesso com patch', async () => {
       const spyAxios = jest.spyOn(axios, 'patch');
       mockAxios.onPatch(USER_URL).reply(200, mockReturnValue);
 
@@ -86,7 +86,7 @@ describe('ConnectionAPI', () => {
   });
 
   describe('connect', () => {
-    it('should return success', async () => {
+    it('deve retornar sucesso', async () => {
       mockAxios.onGet(USER_URL).reply(200, mockReturnValue);
 
       const returnGet = await ConnectionAPI.connect(USER_URL, MetheodEnum.GET);
@@ -94,7 +94,7 @@ describe('ConnectionAPI', () => {
       expect(returnGet).toEqual(mockReturnValue);
     });
 
-    it('should return error 401', async () => {
+    it('deve retornar error 401', async () => {
       mockAxios.onGet(USER_URL).reply(401);
 
       expect(ConnectionAPI.connect(USER_URL, MetheodEnum.GET)).rejects.toThrowError(
@@ -102,7 +102,7 @@ describe('ConnectionAPI', () => {
       );
     });
 
-    it('should return error 403', async () => {
+    it('deve retornar error 403', async () => {
       mockAxios.onGet(USER_URL).reply(403);
 
       expect(ConnectionAPI.connect(USER_URL, MetheodEnum.GET)).rejects.toThrowError(
@@ -110,7 +110,7 @@ describe('ConnectionAPI', () => {
       );
     });
 
-    it('should return error 400', async () => {
+    it('deve retornar error 400', async () => {
       mockAxios.onGet(USER_URL).reply(400);
 
       expect(ConnectionAPI.connect(USER_URL, MetheodEnum.GET)).rejects.toThrowError(
@@ -120,7 +120,7 @@ describe('ConnectionAPI', () => {
   });
 
   describe('test call', () => {
-    it('should header send authorization', async () => {
+    it('o header de autorização deve enviar o token', async () => {
       const spyAxios = jest.spyOn(axios, 'get');
 
       mockAxios.onGet(USER_URL).reply(200, mockReturnValue);
