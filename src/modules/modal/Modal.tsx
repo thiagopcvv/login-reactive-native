@@ -1,19 +1,32 @@
 import React from 'react';
-import { Alert, Modal as ModalReact, StyleSheet, Pressable, View } from 'react-native';
+import {
+  Alert,
+  Modal as ModalReact,
+  StyleSheet,
+  Pressable,
+  View,
+} from 'react-native';
 import Text from '../shared/components/text/Text';
-import { Icon } from '../shared/icon/icon';
-import { textTypes } from '../shared/components/text/textType';
+import {Icon} from '../shared/icon/icon';
+import {textTypes} from '../shared/components/text/textType';
+import {modalTestId} from './__mocks__/modal.testID';
 
 interface ModalProps {
-  title: string
-  text: string
-  onCloseModal: () => void
-  visible: boolean
-  trueOrMot: boolean
+  title: string;
+  text: string;
+  onCloseModal: () => void;
+  visible: boolean;
+  trueOrMot: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, trueOrMot, visible, ...props }) => {
-
+const Modal: React.FC<ModalProps> = ({
+  title,
+  text,
+  onCloseModal,
+  trueOrMot,
+  visible,
+  ...props
+}) => {
   if (trueOrMot) {
     return (
       <View style={styles.centeredView}>
@@ -23,16 +36,18 @@ const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, trueOrMot, vis
           visible={visible}
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
-            onCloseModal()
+            onCloseModal();
           }}
-          {...props}
-          >
+          {...props}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Icon name="user-check" style={styles.iconTrue} size={70}></Icon>
-              <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>{title}</Text>
+              <Icon name="user-check" style={styles.iconTrue} size={70} />
+              <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>
+                {title}
+              </Text>
               <Text style={styles.modalText}>{text}</Text>
               <Pressable
+                testID={modalTestId.MODAL_BUTID}
                 style={[styles.button, styles.buttonTrue]}
                 onPress={onCloseModal}>
                 <Text style={styles.textStyle}>OK !</Text>
@@ -43,7 +58,6 @@ const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, trueOrMot, vis
       </View>
     );
   } else {
-
     return (
       <View style={styles.centeredView}>
         <ModalReact
@@ -52,16 +66,18 @@ const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, trueOrMot, vis
           visible={visible}
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
-            onCloseModal()
+            onCloseModal();
           }}
-          {...props}
-        >
+          {...props}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Icon name="cancel-circle" style={styles.icon} size={70}></Icon>
-              <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>{title}</Text>
+              <Icon name="cancel-circle" style={styles.icon} size={70} />
+              <Text style={styles.modalTitle} type={textTypes.SUBTITLE_BOLD}>
+                {title}
+              </Text>
               <Text style={styles.modalText}>{text}</Text>
               <Pressable
+                testID={modalTestId.MODAL_BUTID}
                 style={[styles.button, styles.buttonClose]}
                 onPress={onCloseModal}>
                 <Text style={styles.textStyle}>OK !</Text>
@@ -72,7 +88,7 @@ const Modal: React.FC<ModalProps> = ({ title, text, onCloseModal, trueOrMot, vis
       </View>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -101,11 +117,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: '#F44B4B',
-    marginBottom: 20
+    marginBottom: 20,
   },
   iconTrue: {
     color: '#4bf470',
-    marginBottom: 20
+    marginBottom: 20,
   },
   button: {
     borderRadius: 20,
@@ -120,12 +136,12 @@ const styles = StyleSheet.create({
   buttonClose: {
     width: '50%',
     backgroundColor: '#F44B4B',
-    margin: 20
+    margin: 20,
   },
   buttonTrue: {
     width: '50%',
     backgroundColor: '#4bf470',
-    margin: 20
+    margin: 20,
   },
   textStyle: {
     color: 'white',
@@ -134,13 +150,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 22,
-    marginBottom: 10
+    marginBottom: 10,
   },
   modalText: {
     margin: 0,
     textAlign: 'center',
     borderRadius: 2,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: 'Poppins-Bold',
   },
 });
 
